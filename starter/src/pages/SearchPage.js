@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Book from "../components/Book";
 import useQuery from "../hooks/useQuery";
 
-function SearchPage({ changeSelf }) {
+function SearchPage({ changeSelf, initBooks }) {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [searchBooks] = useQuery(query);
+  const handleNavigate = () => {
+    initBooks();
+    navigate("/");
+  };
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <Link className="close-search" to="/">
+        <a className="close-search" onClick={handleNavigate}>
           Close
-        </Link>
+        </a>
         <div className="search-books-input-wrapper">
           <input
             type="text"

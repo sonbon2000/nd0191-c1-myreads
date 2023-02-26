@@ -9,10 +9,14 @@ function App() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
+    initBooks();
+  }, []);
+
+  const initBooks = () => {
     BooksApi.getAll().then((data) => {
       setBooks(data);
     });
-  }, []);
+  };
 
   const handleChangeSelf = (book, shelf) => {
     const newBooks = books.map((b) => {
@@ -33,7 +37,12 @@ function App() {
           path="/"
           element={<HomePage books={books} changeSelf={handleChangeSelf} />}
         ></Route>
-        <Route path="/search" element={<SearchPage />}></Route>
+        <Route
+          path="/search"
+          element={
+            <SearchPage changeSelf={handleChangeSelf} initBooks={initBooks} />
+          }
+        ></Route>
       </Routes>
     </div>
   );
