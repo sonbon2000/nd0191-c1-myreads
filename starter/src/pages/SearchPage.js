@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Book from "../components/Book";
+import useQuery from "../hooks/useQuery";
 
-function SearchPage({ books, changeSelf, query, handleChangeQuery }) {
+function SearchPage({ changeSelf }) {
+  const [query, setQuery] = useState("");
+  const [searchBooks] = useQuery(query);
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -14,12 +17,12 @@ function SearchPage({ books, changeSelf, query, handleChangeQuery }) {
             type="text"
             value={query}
             placeholder="Search by title, author, or ISBN"
-            onChange={handleChangeQuery}
+            onChange={(e) => setQuery(e.target.value)}
           />
         </div>
       </div>
       <div className="search-books-results">
-        <Book books={books} changeSelf={changeSelf} />
+        <Book books={searchBooks} changeSelf={changeSelf} />
       </div>
     </div>
   );
