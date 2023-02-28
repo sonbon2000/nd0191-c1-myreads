@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BookShelf from "../components/BookShelf";
+import PropTypes from "prop-types";
 function HomePage({ books, changeSelf }) {
   const currentlyReadingList = books.filter(
     (item) => item.shelf === "currentlyReading"
@@ -31,5 +32,10 @@ function HomePage({ books, changeSelf }) {
     </div>
   );
 }
+
+HomePage.propTypes = {
+  books: PropTypes.array,
+  changeSelf: PropTypes.func,
+};
 
 export default HomePage;

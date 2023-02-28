@@ -4,18 +4,40 @@ import SearchPage from "./pages/SearchPage";
 import * as BooksApi from "./BooksAPI";
 import React, { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage";
+import useQuery from "./hooks/useQuery";
 
 function App() {
   const [books, setBooks] = useState([]);
-
+  const [mapOfIdToBooks, setMapOfIdToBooks] = useState(new Map());
+  const [mergedBooks, setMergedBooks] = useState([]);
+  const [query, setQuery] = useState("");
+  const [searchBooks] = useQuery(query);
   useEffect(() => {
-    initBooks();
-  }, []);
-
-  const initBooks = () => {
     BooksApi.getAll().then((data) => {
       setBooks(data);
+      setMapOfIdToBooks(createMapOfBooks(data));
     });
+  }, []);
+
+  useEffect(() => {
+    const combined = searchBooks.map((book) => {
+      if (mapOfIdToBooks.has(book.id)) {
+        return mapOfIdToBooks.get(book.id);
+      } else {
+        return book;
+      }
+    });
+    setMergedBooks(combined);
+  }, [searchBooks, mapOfIdToBooks]);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const createMapOfBooks = (books) => {
+    const map = new Map();
+    books.map((book) => map.set(book.id, book));
+    return map;
   };
 
   const handleChangeSelf = (book, shelf) => {
@@ -26,6 +48,10 @@ function App() {
       }
       return b;
     });
+    if (!mapOfIdToBooks.has(book.id)) {
+      book.shelf = shelf;
+      newBooks.push(book);
+    }
     setBooks(newBooks);
     BooksApi.update(book, shelf);
   };
@@ -40,7 +66,12 @@ function App() {
         <Route
           path="/search"
           element={
-            <SearchPage changeSelf={handleChangeSelf} initBooks={initBooks} />
+            <SearchPage
+              changeSelf={handleChangeSelf}
+              initBooks={mergedBooks}
+              query={query}
+              handleInputChange={handleInputChange}
+            />
           }
         ></Route>
       </Routes>

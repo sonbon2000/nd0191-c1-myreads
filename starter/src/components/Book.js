@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function Book({ books, changeSelf }) {
   return (
@@ -38,5 +39,10 @@ function Book({ books, changeSelf }) {
     </ol>
   );
 }
+
+Book.propTypes = {
+  changeSelf: PropTypes.func.isRequired,
+  books: PropTypes.array.isRequired,
+};
 
 export default Book;
