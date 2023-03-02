@@ -40,7 +40,11 @@ function App() {
         <Route
           path="/search"
           element={
-            <SearchPage changeSelf={handleChangeSelf} initBooks={initBooks} />
+            <SearchPage
+              books={books}
+              changeSelf={handleChangeSelf}
+              initBooks={initBooks}
+            />
           }
         ></Route>
       </Routes>

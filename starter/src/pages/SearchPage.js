@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Book from "../components/Book";
 import useQuery from "../hooks/useQuery";
+import PropTypes from "prop-types";
 
-function SearchPage({ changeSelf, initBooks }) {
+function SearchPage({ changeSelf, books, initBooks }) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [searchBooks] = useQuery(query);
@@ -11,10 +12,18 @@ function SearchPage({ changeSelf, initBooks }) {
     initBooks();
     navigate("/");
   };
+  const currentSelfBook = (id) => {
+    const book = books.find((book) => book.id === id);
+    if (book) {
+      return book.shelf;
+    }
+
+    return null;
+  };
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a className="close-search" onClick={handleNavigate}>
+        <a href="" className="close-search" onClick={handleNavigate}>
           Close
         </a>
         <div className="search-books-input-wrapper">
@@ -27,10 +36,28 @@ function SearchPage({ changeSelf, initBooks }) {
         </div>
       </div>
       <div className="search-books-results">
-        <Book books={searchBooks} changeSelf={changeSelf} />
+        <ol className="books-grid">
+          {searchBooks.map((book) => {
+            return (
+              <li key={book.id}>
+                <Book
+                  book={book}
+                  changeSelf={changeSelf}
+                  currentSelfBook={currentSelfBook(book.id)}
+                />
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </div>
   );
 }
+
+SearchPage.propTypes = {
+  changeSelf: PropTypes.func.isRequired,
+  initBooks: PropTypes.func.isRequired,
+  books: PropTypes.array.isRequired,
+};
 
 export default SearchPage;
