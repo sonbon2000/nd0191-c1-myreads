@@ -48,7 +48,3 @@ In terms of state
 
 - Component state is passed down from parent components to child components. The state variable is not modified directly - but by using setState() function.
 - Books have the same state on both the search page and the main application page: If a book is on a bookshelf, that is reflected in both locations.
-
-UI and URL are in sync
-
-- Done using react-router.
