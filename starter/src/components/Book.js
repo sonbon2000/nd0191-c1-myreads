@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Book({ book, changeSelf, currentSelfBook }) {
-  console.log(book);
+  console.log(book.shelf);
   return (
     <div className="book">
       <div className="book-top">
@@ -45,7 +45,7 @@ function Book({ book, changeSelf, currentSelfBook }) {
 
 Book.propTypes = {
   changeSelf: PropTypes.func.isRequired,
-  books: PropTypes.array.isRequired,
+  books: PropTypes.array,
   currentSelfBook: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
