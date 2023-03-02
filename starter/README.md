@@ -14,10 +14,6 @@ MyReads lets you manage your digital bookshelf.
 
 Additionally you can search and add books to any shelf.
 
-## Live Demo:
-
-https://udacity-nanodegree-my-reads-project.vercel.app/
-
 ## start locally:
 
 - clone it or download repo then in terminal write these command
@@ -52,13 +48,3 @@ In terms of state
 
 - Component state is passed down from parent components to child components. The state variable is not modified directly - but by using setState() function.
 - Books have the same state on both the search page and the main application page: If a book is on a bookshelf, that is reflected in both locations.
-
-UI and URL are in sync
-
-- Done using react-router.
-
-## ScrrenShots!
-
-![HomePageScreenShot](public/images/HomPage.png)
-
-![SearchPageScreenShot](public/images/SearchPage.png)
