@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Book({ book, changeSelf, currentSelfBook }) {
-  console.log(book.shelf);
   return (
     <div className="book">
       <div className="book-top">
@@ -25,9 +24,7 @@ function Book({ book, changeSelf, currentSelfBook }) {
             }
             onChange={(e) => changeSelf(book, e.target.value)}
           >
-            <option value="none" disabled>
-              Move to...
-            </option>
+            <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
